@@ -1,20 +1,28 @@
 import React, { Component } from 'react';
 import Client from '../Client';
+import {Link} from 'react-router';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {response: ''};
+    this.state = {polls: {}};
   }
 
   componentDidMount(){
-    Client.search('hello', (res) => {
-      this.setState({response: res.test});
+    Client.search('test', (res) => {
+      this.setState({polls: res});
     });
   }
     render(){
       return (
-        <p>{this.state.response}</p>
+        <div id='polls'>
+        {Object.keys(this.state.polls).map((key, i) => {
+          var poll = this.state.polls[key]
+          return (
+            <Link to={`/poll/${poll.name}`} key={i}><p>{poll.name}</p></Link>
+          )
+        })}
+        </div>
       );
     }
 }
