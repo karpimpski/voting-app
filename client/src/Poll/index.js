@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Client from '../Client';
+import {Link} from 'react-router';
 
 class Poll extends Component {
 	constructor(props){
@@ -22,6 +23,7 @@ class Poll extends Component {
 	    			<p key={i}>{option.name} - {option.votes}</p>
 	    		)
 	    	})}
+	    	<Link to='/'>Home</Link>
     	</div>
     );
   }

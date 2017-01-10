@@ -21,12 +21,16 @@ class NewPoll extends Component {
 			inputs.push(<div key={i}><input name='option'/><br/></div>)
 		}
 		return (
-			<form action={proxy + 'api/newpoll'}>
-				<input name='name' placeholder='name'/>
-				{inputs}
-				<button onClick={this.addOption.bind(this)}>Add</button>
-				<input type='submit'/>
-			</form>
+			<div>
+				<form action={proxy + 'api/newpoll'}>
+					<input name='name' placeholder='name'/>
+					{inputs}
+					<button onClick={this.addOption.bind(this)}>Add</button>
+					<input type='submit'/>
+				</form>
+
+				<Link to='/'>Cancel</Link>
+			</div>
 		)
 	}
 }
