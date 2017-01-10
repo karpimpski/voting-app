@@ -14,13 +14,21 @@ class Poll extends Component {
 		})
 	}
 
+	vote(e){
+		var index = encodeURIComponent(e.target.innerHTML);
+		console.log(index);
+		Client.search(`addvote/${this.state.poll.name}/${index}`, (res) => {
+			this.setState({poll: res});
+		});
+	}
+
   render(){
     return (
     	<div id='poll'>
 	    	<h1>{this.state.poll.name}</h1>
-	    	{this.state.poll.options.map(function(option, i){
+	    	{this.state.poll.options.map( (option, i) => {
 	    		return (
-	    			<p key={i}>{option.name} - {option.votes}</p>
+	    			<p id={`vote_${i}`}key={i}><span className='name' onClick={this.vote.bind(this)}>{option.name}</span> - {option.votes}</p>
 	    		)
 	    	})}
 	    	<Link to='/'>Home</Link>

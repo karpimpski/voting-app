@@ -36,4 +36,22 @@ app.get('/api/newpoll', (req, res) => {
 	})
 });
 
+app.get('/api/addvote/:name/:option', (req, res) => {
+	var option = req.params.option;
+	mongo.connect(url, function(err, db){
+		if(err) throw err;
+		db.collection('polls').update(
+			{name : req.params.name, "options.name":req.params.option},
+			{$inc: {"options.$.votes": 1}},
+			(err, doc) => {
+				if(err) throw err;
+				db.collection('polls').findOne({name: req.params.name}, (e, d) => {
+					if(e) throw e;
+					res.end(JSON.stringify(d));
+				})
+			}
+		)
+	});
+});
+
 app.listen(3001);
