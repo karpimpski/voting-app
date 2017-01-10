@@ -3,6 +3,7 @@ var app = express();
 
 var mongo = require('mongodb').MongoClient;
 var url = process.env.DB_URI;
+var pkg = require('./package.json');
 
 app.get('/api/polls', (req, res) => {
 	mongo.connect(url, function(err, db) {
@@ -30,7 +31,7 @@ app.get('/api/newpoll', (req, res) => {
 			return {name: option, votes: 0};
 		});
 		db.collection('polls').insert({name: name, options: options}, function(err, doc){
-			res.end(JSON.stringify(doc));
+			res.redirect(pkg.client + '/poll/' + doc.ops[0].name);
 		});
 	})
 });
