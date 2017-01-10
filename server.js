@@ -4,7 +4,7 @@ var app = express();
 var mongo = require('mongodb').MongoClient;
 var url = process.env.DB_URI;
 
-app.get('/api/test', (req, res) => {
+app.get('/api/polls', (req, res) => {
 	mongo.connect(url, function(err, db) {
 		if(err) throw err;
 		db.collection('polls').find({}).toArray(function(err, docs){

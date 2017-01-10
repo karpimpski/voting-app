@@ -1,13 +1,17 @@
 import React from 'react';
 import { Router, Route } from 'react-router';
 
-import App from './App';
+import Index from './Index';
 import Poll from './Poll';
+import NewPoll from './NewPoll';
+import NotFound from './NotFound';
 
 const Routes = (props) => (
   <Router {...props}>
-    <Route path="/" component={App} />
+    <Route path="/" component={Index} />
     <Route path="/poll/:name" component={Poll} />
+    <Route path='/newpoll' component={NewPoll} />
+    <Route path='*' component={NotFound} />
   </Router>
 );
 
