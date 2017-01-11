@@ -15,9 +15,8 @@ class Poll extends Component {
 	}
 
 	vote(e){
-		var index = encodeURIComponent(e.target.innerHTML);
-		console.log(index);
-		Client.search(`addvote/${this.state.poll.name}/${index}`, (res) => {
+		var option = encodeURIComponent(e.target.innerHTML);
+		Client.search(`addvote/${this.state.poll.name}/${option}`, (res) => {
 			this.setState({poll: res});
 		});
 	}
