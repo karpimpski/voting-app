@@ -52,4 +52,15 @@ app.get('/api/addvote/:name/:option', (req, res) => {
 	});
 });
 
+app.get('/api/delete/:name', (req, res) => {
+	var name = req.params.name;
+	mongo.connect(url, function(err, db){
+		if(err) throw err;
+		db.collection('polls').remove({name: name}, function(err, doc){
+			if(err) throw err;
+			res.end(JSON.stringify(doc))
+		});
+	});
+});
+
 app.listen(3001);

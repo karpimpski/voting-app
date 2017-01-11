@@ -21,6 +21,11 @@ class Poll extends Component {
 		});
 	}
 
+	delete(){
+		Client.search('delete/' + this.state.poll.name);
+		window.location='/';
+	}
+
   render(){
     return (
     	<div id='poll'>
@@ -31,6 +36,7 @@ class Poll extends Component {
 	    		)
 	    	})}
 	    	<Link to='/'>Home</Link>
+	    	<Link onClick={this.delete.bind(this)}>Delete</Link>
     	</div>
     );
   }
