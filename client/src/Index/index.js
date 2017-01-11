@@ -9,7 +9,7 @@ class Index extends Component {
   }
 
   componentDidMount(){
-    Client.search('polls', (res) => {
+    Client.get('/api/polls', (res) => {
       this.setState({polls: res});
     });
   }

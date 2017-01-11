@@ -9,20 +9,20 @@ class Poll extends Component {
 	}
 
 	componentDidMount(){
-		Client.search(`poll/${encodeURIComponent(this.props.params.name)}`, (res) => {
+		Client.get(`/api/poll/${encodeURIComponent(this.props.params.name)}`, (res) => {
 			this.setState({poll: res});
 		})
 	}
 
 	vote(e){
 		var option = encodeURIComponent(e.target.innerHTML);
-		Client.search(`addvote/${encodeURIComponent(this.state.poll.name)}/${option}`, (res) => {
+		Client.get(`/api/addvote/${encodeURIComponent(this.state.poll.name)}/${option}`, (res) => {
 			this.setState({poll: res});
 		});
 	}
 
 	delete(){
-		Client.search('delete/' + encodeURIComponent(this.state.poll.name));
+		Client.get('/api/delete/' + encodeURIComponent(this.state.poll.name));
 		window.location='/';
 	}
 
