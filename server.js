@@ -27,9 +27,7 @@ app.get('/api/newpoll', (req, res) => {
 	mongo.connect(url, function(err,db){
 		if(err) throw err;
 		var name = req.query.name;
-		var options = req.query.option.map(function(option){
-			return {name: option, votes: 0};
-		});
+		var options = req.query.option.filter(opt => opt !== '').map(opt => {return {name: opt, votes: 0}});
 		db.collection('polls').insert({name: name, options: options}, function(err, doc){
 			res.redirect(pkg.client + '/poll/' + doc.ops[0].name);
 		});
