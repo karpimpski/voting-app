@@ -19,7 +19,7 @@ class Index extends Component {
         {Object.keys(this.state.polls).map((key, i) => {
           var poll = this.state.polls[key]
           return (
-            <Link to={`/poll/${poll.name}`} key={i}><p>{poll.name}</p></Link>
+            <Link to={`/poll/${encodeURIComponent(poll.name)}`} key={i}><p>{poll.name}</p></Link>
           )
         })}
         <Link to={`/newpoll`}><p>New Poll</p></Link>

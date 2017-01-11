@@ -9,14 +9,14 @@ class Poll extends Component {
 	}
 
 	componentDidMount(){
-		Client.search(`poll/${this.props.params.name}`, (res) => {
+		Client.search(`poll/${encodeURIComponent(this.props.params.name)}`, (res) => {
 			this.setState({poll: res});
 		})
 	}
 
 	vote(e){
 		var option = encodeURIComponent(e.target.innerHTML);
-		Client.search(`addvote/${this.state.poll.name}/${option}`, (res) => {
+		Client.search(`addvote/${encodeURIComponent(this.state.poll.name)}/${option}`, (res) => {
 			this.setState({poll: res});
 		});
 	}

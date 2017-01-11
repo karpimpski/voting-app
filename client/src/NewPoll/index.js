@@ -14,7 +14,7 @@ class NewPoll extends Component {
 		e.preventDefault();
 		this.setState({num: this.state.num + 1})
 	}
-
+	
 	render() {
 		var inputs = [];
 		for(var i = 0; i < this.state.num; i++){

@@ -29,7 +29,7 @@ app.get('/api/newpoll', (req, res) => {
 		var name = req.query.name;
 		var options = req.query.option.filter(opt => opt !== '').map(opt => {return {name: opt, votes: 0}});
 		db.collection('polls').insert({name: name, options: options}, function(err, doc){
-			res.redirect(pkg.client + '/poll/' + doc.ops[0].name);
+			res.redirect(pkg.client + '/poll/' + encodeURIComponent(doc.ops[0].name));
 		});
 	})
 });
