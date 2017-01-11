@@ -1,9 +1,12 @@
 var express = require('express');
 var app = express();
-
 var mongo = require('mongodb').MongoClient;
+var bodyParser = require('body-parser');
 var url = process.env.DB_URI;
 var pkg = require('./package.json');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/api/polls', (req, res) => {
 	mongo.connect(url, function(err, db) {
@@ -23,11 +26,11 @@ app.get('/api/poll/:name', (req, res) => {
 	});
 });
 
-app.get('/api/newpoll', (req, res) => {
+app.post('/api/newpoll', (req, res) => {
 	mongo.connect(url, function(err,db){
 		if(err) throw err;
-		var name = req.query.name;
-		var options = req.query.option.filter(opt => opt !== '').map(opt => {return {name: opt, votes: 0}});
+		var name = req.body.name;
+		var options = req.body.option.filter(opt => opt !== '').map(opt => {return {name: opt, votes: 0}});
 		db.collection('polls').insert({name: name, options: options}, function(err, doc){
 			res.redirect(pkg.client + '/poll/' + encodeURIComponent(doc.ops[0].name));
 		});

@@ -22,7 +22,7 @@ class NewPoll extends Component {
 		}
 		return (
 			<div>
-				<form action={proxy + 'api/newpoll'}>
+				<form action={proxy + 'api/newpoll'} method='POST'>
 					<input name='name' placeholder='name'/>
 					{inputs}
 					<button onClick={this.addOption.bind(this)}>Add</button>

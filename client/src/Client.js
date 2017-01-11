@@ -6,5 +6,11 @@ function get(query, cb) {
   })
 }
 
-const Client = { get };
+function post(query, cb) {
+  $.get( query, function (data) {
+    cb(JSON.parse(data));
+  })
+}
+
+const Client = { get, post };
 export default Client;
