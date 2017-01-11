@@ -7,10 +7,19 @@ function get(query, cb) {
 }
 
 function post(query, cb) {
-  $.get( query, function (data) {
+  $.post( query, function (data) {
     cb(JSON.parse(data));
   })
 }
 
+function patch(query, cb){
+  $.ajax({
+    url: query,
+    type: 'PATCH',
+    success: function(data) {
+      cb(JSON.parse(data));
+    }
+});
+}
 const Client = { get, post };
 export default Client;
