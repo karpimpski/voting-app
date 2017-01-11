@@ -22,7 +22,7 @@ class Poll extends Component {
 	}
 
 	delete(){
-		Client.search('delete/' + this.state.poll.name);
+		Client.search('delete/' + encodeURIComponent(this.state.poll.name));
 		window.location='/';
 	}
 
