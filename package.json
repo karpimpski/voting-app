@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "node server.js",
+    "dev": "concurrently \"node server.js 3000\" \"npm run client\"",
     "server": "node server.js",
     "client": "cd client && npm start"
   },
@@ -16,6 +17,5 @@
     "express": "^4.14.0",
     "mongodb": "^2.2.19",
     "path": "^0.12.7"
-  },
-  "client": "http://localhost:3001"
+  }
 }

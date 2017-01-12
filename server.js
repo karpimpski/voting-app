@@ -8,6 +8,8 @@ var path = require('path');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('client/build'));
+var client;
+process.argv[2] ? client = 'http://localhost:'+process.argv[2] : client = '';
 
 app.get('/api/polls', (req, res) => {
 	mongo.connect(url, function(err, db) {
@@ -33,7 +35,7 @@ app.post('/api/newpoll', (req, res) => {
 		var name = req.body.name;
 		var options = req.body.option.filter(opt => opt !== '').map(opt => {return {name: opt, votes: 0}});
 		db.collection('polls').insert({name: name, options: options}, function(err, doc){
-			res.redirect(pkg.client + '/poll/' + encodeURIComponent(doc.ops[0].name));
+			res.redirect(client + '/poll/' + encodeURIComponent(doc.ops[0].name));
 		});
 	})
 });
