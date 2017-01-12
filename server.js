@@ -8,7 +8,19 @@ var path = require('path');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('./build'));
+
+// Express only serves static assets in production
+// because in dev we use webpack server
+
+// use dotenv module to set NODE_ENV
+//if (process.env.NODE_ENV === 'production') {
+
+	// comment this line in development as in development
+	// your webpack server is serving files
+  app.use(express.static('client/build'));
+
+//}
+
 
 app.get('/api/polls', (req, res) => {
 	mongo.connect(url, function(err, db) {
@@ -68,8 +80,9 @@ app.get('/api/delete/:name', (req, res) => {
 	});
 });
 
-app.get('/*', function (req, res) {
-   res.sendFile(path.join(__dirname, './client/build', 'index.html'));
- });
+// uncomment the below for development environment
+// app.get('/*', function (req, res) {
+//    res.sendFile(path.join(__dirname, './client/build', 'index.html'));
+//  });
 
 app.listen(3001);

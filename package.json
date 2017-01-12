@@ -17,5 +17,6 @@
     "mongodb": "^2.2.19",
     "path": "^0.12.7"
   },
-  "client": "http://localhost:3000"
+  "client": "http://localhost:3000",
+  "proxy": "http://localhost:3001/"
 }
