@@ -4,9 +4,11 @@ var mongo = require('mongodb').MongoClient;
 var bodyParser = require('body-parser');
 var url = process.env.DB_URI;
 var pkg = require('./package.json');
+var path = require('path');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('./build'));
 
 app.get('/api/polls', (req, res) => {
 	mongo.connect(url, function(err, db) {
@@ -65,5 +67,9 @@ app.get('/api/delete/:name', (req, res) => {
 		});
 	});
 });
+
+app.get('/*', function (req, res) {
+   res.sendFile(path.join(__dirname, './client/build', 'index.html'));
+ });
 
 app.listen(3001);
