@@ -27,8 +27,12 @@ class Poll extends Component {
 	}
 
 	add(){
-		alert(this.state.poll._id);
+		console.log(this.state.poll._id);
 		var option = prompt("Option");
+		Client.patch('/api/addoption/', {id: this.state.poll._id, option: option}, (res) => {
+			console.log(res);
+			this.setState({poll: res});
+		});
 	}
 
   render(){

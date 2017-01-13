@@ -5,13 +5,16 @@ var bodyParser = require('body-parser');
 var url = process.env.DB_URI;
 var pkg = require('./package.json');
 var path = require('path');
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('client/build'));
+var {ObjectId} = require('mongodb'); // or ObjectID
+var objectId = s => ObjectId.isValid(s) ? new ObjectId(s) : null;
 var client;
 process.argv[3] ? client = 'http://localhost:'+process.argv[3] : client = '';
 var port;
 process.argv[2] ? port = +process.argv[2] : port = process.env.PORT;
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('client/build'));
 
 app.get('/api/polls', (req, res) => {
 	mongo.connect(url, function(err, db) {
@@ -54,6 +57,22 @@ app.patch('/api/addvote/', (req, res) => {
 				db.collection('polls').findOne({name: req.body.name}, (e, d) => {
 					if(e) throw e;
 					res.end(JSON.stringify(d));
+				})
+			}
+		)
+	});
+});
+
+app.patch('/api/addoption/', (req, res) => {
+	var option = req.body.option;
+	var id = objectId(req.body.id);
+	mongo.connect(url, function(err, db){
+		if(err) throw err;
+		db.collection('polls').update(
+			{_id: id},
+			{$push: {"options": {"name": option, "votes": 0}}}, (err, doc) => {
+				db.collection('polls').findOne({_id: id}, (err, doc) => {
+					res.end(JSON.stringify(doc));
 				})
 			}
 		)
