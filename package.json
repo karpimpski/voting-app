@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js 8080",
-    "dev": "concurrently \"node server.js 8080 3000\" \"npm run client\"",
+    "start": "node server.js",
+    "dev": "concurrently \"node server.js 3000\" \"npm run client\"",
     "server": "node server.js",
     "client": "cd client && npm start"
   },
