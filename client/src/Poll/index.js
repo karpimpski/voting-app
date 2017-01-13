@@ -15,7 +15,7 @@ class Poll extends Component {
 	}
 
 	vote(e){
-		var option = encodeURIComponent(e.target.innerHTML);
+		var option = e.target.innerHTML;
 		Client.patch(`/api/addvote/`, {name: this.state.poll.name, option: option},  (res) => {
 			this.setState({poll: res});
 		});
@@ -27,10 +27,8 @@ class Poll extends Component {
 	}
 
 	add(){
-		console.log(this.state.poll._id);
 		var option = prompt("Option");
 		Client.patch('/api/addoption/', {id: this.state.poll._id, option: option}, (res) => {
-			console.log(res);
 			this.setState({poll: res});
 		});
 	}
