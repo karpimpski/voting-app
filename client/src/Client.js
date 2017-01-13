@@ -12,14 +12,15 @@ function post(query, cb) {
   })
 }
 
-function patch(query, cb){
+function patch(query, d, cb){
   $.ajax({
     url: query,
     type: 'PATCH',
+    data: d,
     success: function(data) {
       cb(JSON.parse(data));
     }
 });
 }
-const Client = { get, post };
+const Client = { get, post, patch };
 export default Client;

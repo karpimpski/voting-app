@@ -16,7 +16,7 @@ class Poll extends Component {
 
 	vote(e){
 		var option = encodeURIComponent(e.target.innerHTML);
-		Client.get(`/api/addvote/${encodeURIComponent(this.state.poll.name)}/${option}`, (res) => {
+		Client.patch(`/api/addvote/`, {name: this.state.poll.name, option: option},  (res) => {
 			this.setState({poll: res});
 		});
 	}
@@ -24,6 +24,11 @@ class Poll extends Component {
 	delete(){
 		Client.get('/api/delete/' + encodeURIComponent(this.state.poll.name));
 		window.location='/';
+	}
+
+	add(){
+		alert(this.state.poll._id);
+		var option = prompt("Option");
 	}
 
   render(){
@@ -37,6 +42,7 @@ class Poll extends Component {
 	    	})}
 	    	<Link to='/'>Home</Link>
 	    	<Link onClick={this.delete.bind(this)}>Delete</Link>
+	    	<Link onClick={this.add.bind(this)}>Add</Link>
     	</div>
     );
   }

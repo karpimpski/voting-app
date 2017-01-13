@@ -31,6 +31,35 @@ app.get('/api/poll/:name', (req, res) => {
 	});
 });
 
+app.get('/api/delete/:name', (req, res) => {
+	var name = req.params.name;
+	mongo.connect(url, function(err, db){
+		if(err) throw err;
+		db.collection('polls').remove({name: name}, function(err, doc){
+			if(err) throw err;
+			res.end(JSON.stringify(doc))
+		});
+	});
+});
+
+app.patch('/api/addvote/', (req, res) => {
+	var option = req.body.option;
+	mongo.connect(url, function(err, db){
+		if(err) throw err;
+		db.collection('polls').update(
+			{name : req.body.name, "options.name":req.body.option},
+			{$inc: {"options.$.votes": 1}},
+			(err, doc) => {
+				if(err) throw err;
+				db.collection('polls').findOne({name: req.body.name}, (e, d) => {
+					if(e) throw e;
+					res.end(JSON.stringify(d));
+				})
+			}
+		)
+	});
+});
+
 app.post('/api/newpoll', (req, res) => {
 	mongo.connect(url, function(err,db){
 		if(err) throw err;
@@ -41,35 +70,6 @@ app.post('/api/newpoll', (req, res) => {
 			res.redirect(client + '/poll/' + encodeURIComponent(doc.ops[0].name));
 		});
 	})
-});
-
-app.get('/api/addvote/:name/:option', (req, res) => {
-	var option = req.params.option;
-	mongo.connect(url, function(err, db){
-		if(err) throw err;
-		db.collection('polls').update(
-			{name : req.params.name, "options.name":req.params.option},
-			{$inc: {"options.$.votes": 1}},
-			(err, doc) => {
-				if(err) throw err;
-				db.collection('polls').findOne({name: req.params.name}, (e, d) => {
-					if(e) throw e;
-					res.end(JSON.stringify(d));
-				})
-			}
-		)
-	});
-});
-
-app.get('/api/delete/:name', (req, res) => {
-	var name = req.params.name;
-	mongo.connect(url, function(err, db){
-		if(err) throw err;
-		db.collection('polls').remove({name: name}, function(err, doc){
-			if(err) throw err;
-			res.end(JSON.stringify(doc))
-		});
-	});
 });
 
 app.get('*', (req, res) => {
