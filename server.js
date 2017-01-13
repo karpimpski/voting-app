@@ -5,7 +5,9 @@ var bodyParser = require('body-parser');
 var url = process.env.DB_URI;
 var pkg = require('./package.json');
 var path = require('path');
-var {ObjectId} = require('mongodb'); // or ObjectID
+var {ObjectId} = require('mongodb');
+var passport = require('passport');
+ 
 var objectId = s => ObjectId.isValid(s) ? new ObjectId(s) : null;
 var client;
 process.argv[3] ? client = 'http://localhost:'+process.argv[3] : client = '';
