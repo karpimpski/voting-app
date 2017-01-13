@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('client/build'));
 var client;
-process.argv[2] ? client = 'http://localhost:'+process.argv[2] : client = '';
+process.argv[3] ? client = 'http://localhost:'+process.argv[3] : client = '';
 
 app.get('/api/polls', (req, res) => {
 	mongo.connect(url, function(err, db) {
@@ -35,6 +35,7 @@ app.post('/api/newpoll', (req, res) => {
 		var name = req.body.name;
 		var options = req.body.option.filter(opt => opt !== '').map(opt => {return {name: opt, votes: 0}});
 		db.collection('polls').insert({name: name, options: options}, function(err, doc){
+			console.log(client);
 			res.redirect(client + '/poll/' + encodeURIComponent(doc.ops[0].name));
 		});
 	})
@@ -73,4 +74,4 @@ app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname + '/client/build/index.html'));
 })
 
-app.listen(process.env.PORT);
+app.listen(process.argv[2]);

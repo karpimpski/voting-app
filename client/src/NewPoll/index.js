@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import Client from '../Client';
 import {Link} from 'react-router';
-import {proxy} from '../../package.json';
 
 class NewPoll extends Component {
 	constructor(props){
@@ -22,7 +21,7 @@ class NewPoll extends Component {
 		}
 		return (
 			<div>
-				<form action={proxy + 'api/newpoll'} method='POST'>
+				<form action='api/newpoll' method='POST'>
 					<input name='name' placeholder='name'/>
 					{inputs}
 					<button onClick={this.addOption.bind(this)}>Add</button>
