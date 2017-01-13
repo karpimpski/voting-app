@@ -9,7 +9,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('client/build'));
 var client;
-process.argv[2] ? client = 'http://localhost:'+process.argv[2] : client = '';
+process.argv[3] ? client = 'http://localhost:'+process.argv[3] : client = '';
+var port;
+process.argv[2] ? port = +process.argv[2] : port = process.env.PORT;
 
 app.get('/api/polls', (req, res) => {
 	mongo.connect(url, function(err, db) {
@@ -74,4 +76,4 @@ app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname + '/client/build/index.html'));
 })
 
-app.listen(process.env.PORT);
+app.listen(port);
