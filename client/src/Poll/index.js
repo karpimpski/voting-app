@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import Client from '../Client';
 import {Link} from 'react-router';
+import Header from '../Header';
 
 class Poll extends Component {
 	constructor(props){
 		super(props);
-		this.state = {poll: {options: []}}
+		this.state = {poll: {options: []}, user: null}
 	}
 
 	componentDidMount(){
 		Client.get(`/api/poll/${encodeURIComponent(this.props.params.name)}`, (res) => {
 			this.setState({poll: res});
-		})
+		});
 	}
 
 	vote(e){
@@ -35,6 +36,7 @@ class Poll extends Component {
   render(){
     return (
     	<div id='poll'>
+    		<Header />
 	    	<h1>{this.state.poll.name}</h1>
 	    	{this.state.poll.options.map( (option, i) => {
 	    		return (

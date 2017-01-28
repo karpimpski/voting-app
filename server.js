@@ -46,6 +46,16 @@ app.get('/api/poll/:name', (req, res) => {
 	});
 });
 
+app.get('/api/currentuser', (req, res) => {
+	if(req.session.user){
+		var obj = {res: req.session.user};
+	}
+	else{
+		obj = {res: null}
+	}
+	res.end(JSON.stringify(obj));
+});
+
 app.delete('/api/delete/:name', (req, res) => {
 	var name = req.params.name;
 	Poll.remove({name: req.params.name}, function(err){
@@ -91,6 +101,14 @@ app.post('/api/newpoll', (req, res) => {
 		res.redirect(client + '/poll/' + encodeURIComponent(poll.name));
 	})
 });
+
+app.post('/api/register', (req, res) => {
+	//do stuff
+});
+
+app.post('/api/login', (req, res) => {
+	//do stuff
+})
 
 app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname + '/client/build/index.html'));
