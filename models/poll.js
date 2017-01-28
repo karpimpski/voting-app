@@ -3,7 +3,8 @@ var Schema = mongoose.Schema;
 
 var pollSchema = new Schema({
 	name: {type: String, required: true, unique: true},
-	options: Array
+	options: Array,
+	voters: Array
 });
 
 var Poll  = mongoose.model('Poll', pollSchema);

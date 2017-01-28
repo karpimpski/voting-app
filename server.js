@@ -99,19 +99,21 @@ app.delete('/api/delete/:name', (req, res) => {
 
 app.patch('/api/addvote/', (req, res) => {
 	var option = req.body.option;
-	var fil = (opt) => opt.name == req.body.option;
-	if(!req.session[`voted-${req.body.name}`])
-	Poll.findOneAndUpdate(
-    {name: req.body.name, 'options.name': req.body.option}, 
-    {$inc: {
-        'options.$.votes': 1       
-    }},
-    {new: true},
-    function(err, d) {
-    	req.session[`voted-${req.body.name}`] = true;
-    	res.end(JSON.stringify(d));
-    }
-	);
+	var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+	if(!req.session[`voted-${req.body.name}`]){
+		Poll.findOneAndUpdate(
+	    {name: req.body.name, 'options.name': req.body.option}, 
+	    {
+		    $inc: { 'options.$.votes': 1 },
+		    $push: {'voters': ip }
+	  	},
+	    {new: true},
+	    function(err, d) {
+	    	req.session[`voted-${req.body.name}`] = true;
+	    	res.end(JSON.stringify(d));
+	    }
+		);
+	}
 });
 
 app.patch('/api/addoption/', (req, res) => {
