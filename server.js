@@ -9,18 +9,8 @@ mongoose.connect(process.env.DB_URI);
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
-
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-
-
-
- 
-var objectId = s => ObjectId.isValid(s) ? new ObjectId(s) : null;
-var client;
-process.argv[3] ? client = 'http://localhost:'+process.argv[3] : client = '';
-var port;
-process.argv[2] ? port = +process.argv[2] : port = process.env.PORT;
 
 app.use(cookieParser());
 app.use(bodyParser.json());
@@ -33,6 +23,12 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static('client/build'));
+
+var objectId = s => ObjectId.isValid(s) ? new ObjectId(s) : null;
+var client;
+process.argv[3] ? client = 'http://localhost:'+process.argv[3] : client = '';
+var port;
+process.argv[2] ? port = +process.argv[2] : port = process.env.PORT;
 
 var Poll = require('./models/poll.js');
 
@@ -61,6 +57,7 @@ app.delete('/api/delete/:name', (req, res) => {
 app.patch('/api/addvote/', (req, res) => {
 	var option = req.body.option;
 	var fil = (opt) => opt.name == req.body.option;
+	if(!req.session[`voted-${req.body.name}`])
 	Poll.findOneAndUpdate(
     {name: req.body.name, 'options.name': req.body.option}, 
     {$inc: {
@@ -68,7 +65,7 @@ app.patch('/api/addvote/', (req, res) => {
     }},
     {new: true},
     function(err, d) {
-    	console.log(d);
+    	req.session[`voted-${req.body.name}`] = true;
     	res.end(JSON.stringify(d));
     }
 	);
