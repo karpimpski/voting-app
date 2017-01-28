@@ -12,6 +12,31 @@ var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function (err, user) {
+    done(err, user);
+  });
+});
+
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    User.findOne({ username: username }, function (err, user) {
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
+  }
+));
+
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -31,6 +56,7 @@ var port;
 process.argv[2] ? port = +process.argv[2] : port = process.env.PORT;
 
 var Poll = require('./models/poll.js');
+var User = require('./models/user.js');
 
 app.get('/api/polls', (req, res) => {
 	Poll.find({}, function(err, polls){
@@ -47,13 +73,20 @@ app.get('/api/poll/:name', (req, res) => {
 });
 
 app.get('/api/currentuser', (req, res) => {
-	if(req.session.user){
-		var obj = {res: req.session.user};
+	if(req.user){
+		var user = req.user;
+		user.password = null;
+		var obj = {res: req.user};
 	}
 	else{
 		obj = {res: null}
 	}
 	res.end(JSON.stringify(obj));
+});
+
+app.post('/api/logout', function(req, res){
+  req.logout();
+  res.end('logged out');
 });
 
 app.delete('/api/delete/:name', (req, res) => {
@@ -102,13 +135,31 @@ app.post('/api/newpoll', (req, res) => {
 	})
 });
 
-app.post('/api/register', (req, res) => {
-	//do stuff
+app.post('/api/register', function(req, res){
+  User.find({username: req.body.username}, function(err, users){
+    if(err) throw err;
+    if(users.length == 0){
+      var user = new User({ username: req.body.username, password: req.body.password });
+      user.save(function (err) {
+        if (err) {
+          console.log(err);
+        } else {
+          req.login(user, function(err){
+            if(err) throw err;
+            res.redirect('/');
+          });
+        }
+      });
+    }
+    else{
+      res.redirect('/register');
+    }
+  });
 });
 
-app.post('/api/login', (req, res) => {
-	//do stuff
-})
+app.post('/api/login',
+  passport.authenticate('local', { successRedirect: '/',
+                                   failureRedirect: '/login'}));
 
 app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname + '/client/build/index.html'));

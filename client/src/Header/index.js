@@ -13,17 +13,18 @@ class Header extends Component {
       this.setState({user: res.res})
     });
   }
+
+  logout(){
+    Client.post('/api/logout');
+    window.location = '/';
+  }
+
   render(){
-  	if(this.props.user){
-  		var header = <div id='navigation-links'><Link to='/profile'>{this.state.user.username}</Link></div>;
-  	}
-  	else{
-  		header = <div id='navigation-links'><Link to='/register'>Register</Link> <Link to='/login'>Login</Link></div>
-  	}
+    var loggedOut = <div id='navigation-links'><Link to='/register'>Register</Link> <Link to='/login'>Login</Link></div>;
     return (
       <div id='header'>
         <Link to='/'>Home</Link> 
-        {header}
+        {this.state.user ? <div id='navigation-links'><Link to='/profile'>{this.state.user.username}</Link> <Link onClick={this.logout}>Logout</Link></div> : loggedOut}
       </div>
     );
   }
