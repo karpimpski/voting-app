@@ -134,8 +134,11 @@ app.post('/api/newpoll', (req, res) => {
 	}
 	var name = req.body.name;
 	var options = req.body.option.filter(opt => opt !== '').map(opt => {return {name: opt, votes: 0}});
-	Poll.create({name: name, options: options}, function(err, poll){
+	Poll.create({name: name, options: options, user: req.user._id}, function(err, poll){
 		if(err) throw err;
+		User.findByIdAndUpdate(req.user._id, {$push: {"polls": poll._id } }, function(err, result){
+        if(err) throw err;
+    });
 		res.redirect(client + '/poll/' + encodeURIComponent(poll.name));
 	})
 });
