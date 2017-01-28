@@ -1,12 +1,20 @@
 var express = require('express');
 var app = express();
-var bodyParser = require('body-parser');
 var pkg = require('./package.json');
 var path = require('path');
 var {ObjectId} = require('mongodb');
-var passport = require('passport');
 var mongoose = require('mongoose');
 mongoose.connect(process.env.DB_URI);
+
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var session = require('express-session');
+
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+
+
+
  
 var objectId = s => ObjectId.isValid(s) ? new ObjectId(s) : null;
 var client;
@@ -14,8 +22,16 @@ process.argv[3] ? client = 'http://localhost:'+process.argv[3] : client = '';
 var port;
 process.argv[2] ? port = +process.argv[2] : port = process.env.PORT;
 
+app.use(cookieParser());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(session({
+    secret: 'aglhsha;asgq351021hgadlbvagq723ntaskg1',
+    resave: true,
+    saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static('client/build'));
 
 var Poll = require('./models/poll.js');
@@ -56,20 +72,6 @@ app.patch('/api/addvote/', (req, res) => {
     	res.end(JSON.stringify(d));
     }
 	);
-	/*mongo.connect(url, function(err, db){
-		if(err) throw err;
-		db.collection('polls').update(
-			{name : req.body.name, "options.name":req.body.option},
-			{$inc: {"options.$.votes": 1}},
-			(err, doc) => {
-				if(err) throw err;
-				db.collection('polls').findOne({name: req.body.name}, (e, d) => {
-					if(e) throw e;
-					res.end(JSON.stringify(d));
-				})
-			}
-		)
-	});*/
 });
 
 app.patch('/api/addoption/', (req, res) => {

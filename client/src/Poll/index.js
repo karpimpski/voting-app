@@ -11,7 +11,6 @@ class Poll extends Component {
 	componentDidMount(){
 		Client.get(`/api/poll/${encodeURIComponent(this.props.params.name)}`, (res) => {
 			this.setState({poll: res});
-			console.log(res);
 		})
 	}
 
