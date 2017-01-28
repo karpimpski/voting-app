@@ -1,12 +1,12 @@
 var express = require('express');
 var app = express();
-var mongo = require('mongodb').MongoClient;
 var bodyParser = require('body-parser');
-var url = process.env.DB_URI;
 var pkg = require('./package.json');
 var path = require('path');
 var {ObjectId} = require('mongodb');
 var passport = require('passport');
+var mongoose = require('mongoose');
+mongoose.connect(process.env.DB_URI);
  
 var objectId = s => ObjectId.isValid(s) ? new ObjectId(s) : null;
 var client;
@@ -18,13 +18,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('client/build'));
 
+var Poll = require('./models/poll.js');
+
 app.get('/api/polls', (req, res) => {
-	mongo.connect(url, function(err, db) {
+	Poll.find({}, function(err, polls){
 		if(err) throw err;
-		db.collection('polls').find({}).toArray(function(err, docs){
-			res.end(JSON.stringify(docs));
-		});
-	});
+		res.end(JSON.stringify(polls));
+	})
 });
 
 app.get('/api/poll/:name', (req, res) => {
