@@ -18,7 +18,12 @@ class Poll extends Component {
 	vote(e){
 		var option = e.target.innerHTML;
 		Client.patch(`/api/addvote/`, {name: this.state.poll.name, option: option},  (res) => {
-			this.setState({poll: res});
+			if(res){
+				this.setState({poll: res});
+			}
+			else{
+				alert('You already voted!');
+			}
 		});
 	}
 

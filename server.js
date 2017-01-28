@@ -100,20 +100,20 @@ app.delete('/api/delete/:name', (req, res) => {
 app.patch('/api/addvote/', (req, res) => {
 	var option = req.body.option;
 	var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-	if(!req.session[`voted-${req.body.name}`]){
-		Poll.findOneAndUpdate(
-	    {name: req.body.name, 'options.name': req.body.option}, 
-	    {
-		    $inc: { 'options.$.votes': 1 },
-		    $push: {'voters': ip }
-	  	},
-	    {new: true},
-	    function(err, d) {
-	    	req.session[`voted-${req.body.name}`] = true;
-	    	res.end(JSON.stringify(d));
-	    }
-		);
-	}
+	Poll.findOne({name: req.body.name}, function(err, poll){
+		if(err) throw err;
+		if(poll.voters.indexOf(ip) < 0){
+			poll.options.find((opt) => opt.name == req.body.option).votes++;
+			poll.voters = poll.voters.concat(ip);
+			poll.markModified('options', 'voters');
+			poll.save(function(err, poll){
+				res.end(JSON.stringify(poll));
+			})
+		}
+		else{
+			res.end(JSON.stringify(false));
+		}
+	});
 });
 
 app.patch('/api/addoption/', (req, res) => {
