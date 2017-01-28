@@ -129,6 +129,9 @@ app.patch('/api/addoption/', (req, res) => {
 });
 
 app.post('/api/newpoll', (req, res) => {
+	if(!req.user){
+		res.end(JSON.stringify(false));
+	}
 	var name = req.body.name;
 	var options = req.body.option.filter(opt => opt !== '').map(opt => {return {name: opt, votes: 0}});
 	Poll.create({name: name, options: options}, function(err, poll){

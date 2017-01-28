@@ -6,7 +6,7 @@ import Header from '../Header';
 class Index extends Component {
   constructor(props) {
     super(props);
-    this.state = {polls: {}};
+    this.state = {polls: {}, user: null};
   }
 
   componentDidMount(){
@@ -17,20 +17,28 @@ class Index extends Component {
       this.setState({user: res.res})
     });
   }
-    render(){
-      return (
-        <div id='polls'>
-        <Header />
-        {Object.keys(this.state.polls).map((key, i) => {
-          var poll = this.state.polls[key]
-          return (
-            <Link to={`/poll/${encodeURIComponent(poll.name)}`} key={i}><p>{poll.name}</p></Link>
-          )
-        })}
-        <Link to={`/newpoll`}><p>New Poll</p></Link>
-        </div>
-      );
+
+  checkVote(e){
+    if(!this.state.user){
+      e.preventDefault();
+      alert('You need to be signed in!');
     }
+  }
+
+  render(){
+    return (
+      <div id='polls'>
+      <Header />
+      {Object.keys(this.state.polls).map((key, i) => {
+        var poll = this.state.polls[key]
+        return (
+          <Link to={`/poll/${encodeURIComponent(poll.name)}`} key={i}><p>{poll.name}</p></Link>
+        )
+      })}
+      <Link to={`/newpoll`} onClick={this.checkVote.bind(this)}><p>New Poll</p></Link>
+      </div>
+    );
+  }
 }
 
 export default Index;

@@ -14,6 +14,15 @@ class NewPoll extends Component {
 		e.preventDefault();
 		this.setState({num: this.state.num + 1})
 	}
+
+	componentDidMount(){
+    Client.get('/api/currentuser', (res) => {
+    	if(res.res == null){
+    		alert('You need to be signed in!');
+    		window.location = '/';
+    	}
+    });
+  }
 	
 	render() {
 		var inputs = [];
