@@ -5,6 +5,7 @@ var pollSchema = new Schema({
 	name: {type: String, required: true, unique: true},
 	options: Array,
 	voters: Array,
+	author: String,
 	user: Schema.Types.ObjectId
 });
 

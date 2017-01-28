@@ -6,7 +6,7 @@ import Header from '../Header';
 class Poll extends Component {
 	constructor(props){
 		super(props);
-		this.state = {poll: {options: []}, user: null}
+		this.state = {poll: {options: [], author: null}, user: null}
 	}
 
 	componentDidMount(){
@@ -43,6 +43,7 @@ class Poll extends Component {
     	<div id='poll'>
     		<Header />
 	    	<h1>{this.state.poll.name}</h1>
+	    	<h2>{this.state.poll.author}</h2>
 	    	{this.state.poll.options.map( (option, i) => {
 	    		return (
 	    			<p id={`vote_${i}`}key={i}><span className='name' onClick={this.vote.bind(this)}>{option.name}</span> - {option.votes}</p>
