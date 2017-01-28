@@ -28,11 +28,9 @@ app.get('/api/polls', (req, res) => {
 });
 
 app.get('/api/poll/:name', (req, res) => {
-	mongo.connect(url, function(err, db){
+	Poll.findOne({name: req.params.name}, function(err, poll){
 		if(err) throw err;
-		db.collection('polls').findOne({"name": req.params.name}, function(err, doc){
-			res.end(JSON.stringify(doc));
-		});
+		res.end(JSON.stringify(poll));
 	});
 });
 
