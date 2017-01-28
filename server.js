@@ -34,20 +34,29 @@ app.get('/api/poll/:name', (req, res) => {
 	});
 });
 
-app.get('/api/delete/:name', (req, res) => {
+app.delete('/api/delete/:name', (req, res) => {
 	var name = req.params.name;
-	mongo.connect(url, function(err, db){
+	Poll.remove({name: req.params.name}, function(err){
 		if(err) throw err;
-		db.collection('polls').remove({name: name}, function(err, doc){
-			if(err) throw err;
-			res.end(JSON.stringify(doc))
-		});
-	});
+		res.redirect('/');
+	})
 });
 
 app.patch('/api/addvote/', (req, res) => {
 	var option = req.body.option;
-	mongo.connect(url, function(err, db){
+	var fil = (opt) => opt.name == req.body.option;
+	Poll.findOneAndUpdate(
+    {name: req.body.name, 'options.name': req.body.option}, 
+    {$inc: {
+        'options.$.votes': 1       
+    }},
+    {new: true},
+    function(err, d) {
+    	console.log(d);
+    	res.end(JSON.stringify(d));
+    }
+	);
+	/*mongo.connect(url, function(err, db){
 		if(err) throw err;
 		db.collection('polls').update(
 			{name : req.body.name, "options.name":req.body.option},
@@ -60,34 +69,27 @@ app.patch('/api/addvote/', (req, res) => {
 				})
 			}
 		)
-	});
+	});*/
 });
 
 app.patch('/api/addoption/', (req, res) => {
 	var option = req.body.option;
 	var id = objectId(req.body.id);
-	mongo.connect(url, function(err, db){
-		if(err) throw err;
-		db.collection('polls').update(
-			{_id: id},
-			{$push: {"options": {"name": option, "votes": 0}}}, (err, doc) => {
-				db.collection('polls').findOne({_id: id}, (err, doc) => {
-					res.end(JSON.stringify(doc));
-				})
-			}
-		)
+	Poll.findOne({_id: id}, function (err, poll) {
+		poll.options = poll.options.concat({'name': option, 'votes': 0})
+		poll.save(function (err, poll) {
+			if(err) throw err;
+			res.end(JSON.stringify(poll));
+    });
 	});
 });
 
 app.post('/api/newpoll', (req, res) => {
-	mongo.connect(url, function(err,db){
+	var name = req.body.name;
+	var options = req.body.option.filter(opt => opt !== '').map(opt => {return {name: opt, votes: 0}});
+	Poll.create({name: name, options: options}, function(err, poll){
 		if(err) throw err;
-		var name = req.body.name;
-		var options = req.body.option.filter(opt => opt !== '').map(opt => {return {name: opt, votes: 0}});
-		db.collection('polls').insert({name: name, options: options}, function(err, doc){
-			console.log(client);
-			res.redirect(client + '/poll/' + encodeURIComponent(doc.ops[0].name));
-		});
+		res.redirect(client + '/poll/' + encodeURIComponent(poll.name));
 	})
 });
 

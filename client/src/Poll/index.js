@@ -11,6 +11,7 @@ class Poll extends Component {
 	componentDidMount(){
 		Client.get(`/api/poll/${encodeURIComponent(this.props.params.name)}`, (res) => {
 			this.setState({poll: res});
+			console.log(res);
 		})
 	}
 
@@ -22,8 +23,7 @@ class Poll extends Component {
 	}
 
 	delete(){
-		Client.get('/api/delete/' + encodeURIComponent(this.state.poll.name));
-		window.location='/';
+		Client.del('/api/delete/' + encodeURIComponent(this.state.poll.name), this.state.poll.name);
 	}
 
 	add(){

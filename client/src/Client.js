@@ -20,7 +20,18 @@ function patch(query, d, cb){
     success: function(data) {
       cb(JSON.parse(data));
     }
-});
+  });
+} 
+
+function del(query, d, cb){
+  $.ajax({
+    url: query,
+    type: 'DELETE',
+    data: d,
+    success: function(data){
+      cb(JSON.parse(data));
+    }
+  })
 }
-const Client = { get, post, patch };
+const Client = { get, post, patch, del };
 export default Client;
