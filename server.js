@@ -89,12 +89,11 @@ app.post('/api/logout', function(req, res){
   res.end('logged out');
 });
 
-app.delete('/api/delete/:name', (req, res) => {
-	var name = req.params.name;
-	Poll.remove({name: req.params.name}, function(err){
+app.delete('/api/delete', (req, res) => {
+	Poll.remove({name: req.body.name}, function(err){
 		if(err) throw err;
-		res.redirect('/');
-	})
+		res.end(JSON.stringify({res: 'deleted poll'}));
+	});
 });
 
 app.patch('/api/addvote/', (req, res) => {

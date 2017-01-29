@@ -28,7 +28,9 @@ class Poll extends Component {
 	}
 
 	delete(){
-		Client.del('/api/delete/' + encodeURIComponent(this.state.poll.name), this.state.poll.name);
+		Client.del('/api/delete/', {name: this.state.poll.name}, function(res){
+			window.location = '/';
+		});
 	}
 
 	add(){
