@@ -76,12 +76,20 @@ app.get('/api/currentuser', (req, res) => {
 	if(req.user){
 		var user = req.user;
 		user.password = null;
-		var obj = {res: req.user};
+		var obj = {res: user};
 	}
 	else{
 		obj = {res: null}
 	}
 	res.end(JSON.stringify(obj));
+});
+
+app.get('/api/user/:username', (req, res) => {
+	User.findOne({username: req.params.username}, function(err, user){
+		if(err) throw err;
+		user.password = null;
+		res.end(JSON.stringify({res: user}))
+	})
 });
 
 app.post('/api/logout', function(req, res){

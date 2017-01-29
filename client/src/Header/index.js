@@ -24,7 +24,7 @@ class Header extends Component {
     return (
       <div id='header'>
         <Link to='/'>Home</Link> 
-        {this.state.user ? <div id='navigation-links'><Link to='/profile'>{this.state.user.username}</Link> <Link onClick={this.logout}>Logout</Link></div> : loggedOut}
+        {this.state.user ? <div id='navigation-links'><Link to={'/user/' + this.state.user.username}>{this.state.user.username}</Link> <Link onClick={this.logout}>Logout</Link></div> : loggedOut}
       </div>
     );
   }

@@ -53,7 +53,7 @@ class Poll extends Component {
     	<div id='poll'>
     		<Header />
 	    	<h1>{this.state.poll.name}</h1>
-	    	<h2>{this.state.poll.author}</h2>
+	    	<h2><Link to={`/user/${this.state.poll.author}`}>{this.state.poll.author}</Link></h2>
 	    	{this.state.poll.options.map( (option, i) => {
 	    		return (
 	    			<p id={`vote_${i}`}key={i}><span className='name' onClick={this.vote.bind(this)}>{option.name}</span> - {option.votes}</p>
@@ -61,7 +61,7 @@ class Poll extends Component {
 	    	})}
 	    	<Link to='/'>Home</Link>
 	    	<Link onClick={this.delete.bind(this)}>Delete</Link>
-	    	<Link onClick={this.add.bind(this)}>Add</Link>
+	    	<Link onClick={this.add.bind(this)}>Add Option</Link>
     	</div>
     );
   }

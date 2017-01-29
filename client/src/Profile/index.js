@@ -10,9 +10,9 @@ class Profile extends Component {
 	}
 
 	componentDidMount(){
-		Client.get(`/api/currentuser`, (res) => {
-			console.log(res.res.poll_names);
+		Client.get(`/api/user/` + this.props.params.username, (res) => {
 			this.setState({user: res.res});
+			console.log(this.state.user);
 		});
 	}
 
@@ -23,7 +23,9 @@ class Profile extends Component {
 	    	<h1>{this.state.user.username}</h1>
 	    	{this.state.user.poll_names.map( (poll, i) => {
 	    		return (
-	    			<Link to={`/poll/${encodeURIComponent(poll)}`}>{poll}</Link>
+	    			<div>
+	    			<Link to={`/poll/${encodeURIComponent(poll)}`}>{poll}</Link><br/>
+	    			</div>
 	    		)
 	    	})}
     	</div>

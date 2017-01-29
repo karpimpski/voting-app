@@ -16,7 +16,7 @@ const Routes = (props) => (
     <Route path='/newpoll' component={NewPoll} />
     <Route path='/register' component={Register} />
     <Route path='/login' component={LogIn} />
-    <Route path='/profile' component={Profile} />
+    <Route path='/user/:username' component={Profile} />
     <Route path='*' component={NotFound} />
   </Router>
 );
