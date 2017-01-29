@@ -90,9 +90,24 @@ app.post('/api/logout', function(req, res){
 });
 
 app.delete('/api/delete', (req, res) => {
-	Poll.remove({name: req.body.name}, function(err){
+	Poll.findOne({name: req.body.name}, function(err, poll){
 		if(err) throw err;
-		res.end(JSON.stringify({res: 'deleted poll'}));
+		if(req.user.username == poll.author){
+			User.findById(poll.user, function(err, user){
+				var index = user.polls.indexOf(poll._id);
+				user.polls.splice(index, 1);
+				user.save(function(err){
+					if(err) throw err;
+					poll.remove(function(err){
+						if(err) throw err;
+						res.end(JSON.stringify({res: true}));
+					});
+				})
+			});
+		}
+		else{
+			res.end(JSON.stringify(false));
+		}
 	});
 });
 

@@ -17,19 +17,26 @@ class Poll extends Component {
 
 	vote(e){
 		var option = e.target.innerHTML;
-		Client.patch(`/api/addvote/`, {name: this.state.poll.name, option: option},  (res) => {
-			if(res){
-				this.setState({poll: res});
-			}
-			else{
-				alert('You already voted!');
-			}
-		});
+		if(confirm('Are you sure?')){
+			Client.patch(`/api/addvote/`, {name: this.state.poll.name, option: option},  (res) => {
+				if(res){
+					this.setState({poll: res});
+				}
+				else{
+					alert('You already voted!');
+				}
+			});
+		}
 	}
 
 	delete(){
 		Client.del('/api/delete/', {name: this.state.poll.name}, function(res){
-			window.location = '/';
+			if(res){
+				window.location = '/';
+			}
+			else{
+				alert("Sorry, you didn't create this poll.");
+			}
 		});
 	}
 
