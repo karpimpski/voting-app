@@ -96,6 +96,8 @@ app.delete('/api/delete', (req, res) => {
 			User.findById(poll.user, function(err, user){
 				var index = user.polls.indexOf(poll._id);
 				user.polls.splice(index, 1);
+				var i = user.poll_names.indexOf(poll.name);
+				user.poll_names.splice(i, 1);
 				user.save(function(err){
 					if(err) throw err;
 					poll.remove(function(err){
@@ -150,7 +152,7 @@ app.post('/api/newpoll', (req, res) => {
 	var options = req.body.option.filter(opt => opt !== '').map(opt => {return {name: opt, votes: 0}});
 	Poll.create({name: name, options: options, user: req.user._id, author: req.user.username}, function(err, poll){
 		if(err) throw err;
-		User.findByIdAndUpdate(req.user._id, {$push: {"polls": poll._id } }, function(err, result){
+		User.findByIdAndUpdate(req.user._id, {$push: {"polls": poll._id,  "poll_names": poll.name} }, function(err, result){
         if(err) throw err;
     });
 		res.redirect(client + '/poll/' + encodeURIComponent(poll.name));

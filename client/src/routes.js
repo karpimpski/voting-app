@@ -7,6 +7,7 @@ import NewPoll from './NewPoll';
 import NotFound from './NotFound';
 import Register from './Register';
 import LogIn from './LogIn';
+import Profile from './Profile';
 
 const Routes = (props) => (
   <Router {...props}>
@@ -15,6 +16,7 @@ const Routes = (props) => (
     <Route path='/newpoll' component={NewPoll} />
     <Route path='/register' component={Register} />
     <Route path='/login' component={LogIn} />
+    <Route path='/profile' component={Profile} />
     <Route path='*' component={NotFound} />
   </Router>
 );
