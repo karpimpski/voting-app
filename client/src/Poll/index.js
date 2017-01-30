@@ -43,9 +43,11 @@ class Poll extends Component {
 
 	add(){
 		var option = prompt("Option");
-		Client.patch('/api/addoption/', {id: this.state.poll._id, option: option}, (res) => {
-			this.setState({poll: res});
-		});
+		if(option !== '' && option !== null){
+			Client.patch('/api/addoption/', {id: this.state.poll._id, option: option}, (res) => {
+				this.setState({poll: res});
+			});
+		}
 	}
 
   render(){
