@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
 import Client from '../Client';
 import {Link} from 'react-router';
 import Header from '../Header';

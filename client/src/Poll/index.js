@@ -56,7 +56,7 @@ class Poll extends Component {
 	}
 
   render(){
-  	const creator = this.state.user && this.state.user.username == this.state.poll.author;
+  	const creator = this.state.user && this.state.user.username === this.state.poll.author;
   	const loggedIn = this.state.user !== null;
   	let url='http://localhost:3000';
   	let text = `${this.state.poll.name} | Vote now at ${window.location.protocol}//${window.location.host}${window.location.pathname}`

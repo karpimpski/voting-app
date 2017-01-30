@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import Client from '../Client';
-import {Link} from 'react-router';
 import Header from '../Header';
 
 class Register extends Component {
