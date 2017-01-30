@@ -2,16 +2,20 @@ import React, { Component } from 'react';
 import Client from '../Client';
 import {Link} from 'react-router';
 import Header from '../Header';
+import { TwitterButton, TwitterCount } from "react-social";
 
 class Poll extends Component {
 	constructor(props){
 		super(props);
-		this.state = {poll: {options: [], author: null}, user: null}
+		this.state = {poll: {options: [], author: null}, user: {username: null}}
 	}
 
 	componentDidMount(){
 		Client.get(`/api/poll/${encodeURIComponent(this.props.params.name)}`, (res) => {
 			this.setState({poll: res});
+			Client.get('/api/currentuser', (r) => {
+	      this.setState({user: r.res})
+	    });
 		});
 	}
 
@@ -51,7 +55,17 @@ class Poll extends Component {
 	}
 
   render(){
+  	const creator = this.state.user && this.state.user.username == this.state.poll.author;
+  	const loggedIn = this.state.user !== null;
+  	let url='http://localhost:3000';
+  	let text = `${this.state.poll.name} | Vote now at ${window.location.protocol}//${window.location.host}${window.location.pathname}`
+  	const button = 
+  	<TwitterButton url={text}>
+        <TwitterCount url={url} />
+        {" Share " + url}
+      </TwitterButton>
     return (
+    	
     	<div id='poll'>
     		<Header />
 	    	<h1>{this.state.poll.name}</h1>
@@ -62,8 +76,9 @@ class Poll extends Component {
 	    		)
 	    	})}
 	    	<Link to='/'>Home</Link>
-	    	<Link onClick={this.delete.bind(this)}>Delete</Link>
-	    	<Link onClick={this.add.bind(this)}>Add Option</Link>
+	    	{creator ? <Link onClick={this.delete.bind(this)}>Delete</Link> : null }
+	    	{loggedIn ? button : null }
+	    	{loggedIn ? <Link onClick={this.add.bind(this)}>Add Option</Link> : null}
     	</div>
     );
   }
