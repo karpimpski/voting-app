@@ -3,6 +3,7 @@ import Client from '../Client';
 import {Link} from 'react-router';
 import Header from '../Header';
 import { TwitterButton, TwitterCount } from "react-social";
+import {Chart} from 'react-google-charts';
 
 class Poll extends Component {
 	constructor(props){
@@ -61,10 +62,16 @@ class Poll extends Component {
   	let text = `${this.state.poll.name} | Vote now at ${window.location.protocol}//${window.location.host}${window.location.pathname}`
   	const button = 
   	<TwitterButton url={text}>
-        <TwitterCount url={url} />
-        {" Share " + url}
-      </TwitterButton>
+      <TwitterCount url={url} />
+      {" Share " + url}
+    </TwitterButton>
+    let data = [
+    	['Option', 'Votes']
+    ]
+    this.state.poll.options.forEach((option) => data.push([option.name, option.votes]))
+    console.log(data);
     return (
+
     	
     	<div id='poll'>
     		<Header />
@@ -75,6 +82,15 @@ class Poll extends Component {
 	    			<p id={`vote_${i}`}key={i}><span className='name' onClick={this.vote.bind(this)}>{option.name}</span> - {option.votes}</p>
 	    		)
 	    	})}
+	    	<Chart
+	        chartType="PieChart" 
+	        data={data}
+	        options={{}}
+	        graph_id="chart"
+	        width="100%"
+	        height="400px"
+	        legend_toggle
+	       />
 	    	<Link to='/'>Home</Link>
 	    	{creator ? <Link onClick={this.delete.bind(this)}>Delete</Link> : null }
 	    	{loggedIn ? button : null }
