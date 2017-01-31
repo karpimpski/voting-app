@@ -37,9 +37,9 @@ class NewPoll extends Component {
 						<input name='name' className='form-input' placeholder='name' autoComplete='off'/>
 					</div>
 					{inputs}
-					<div className='center' style={{'marginTop': '20px'}}>
-						<button onClick={this.addOption.bind(this)} className='form-input-button'>Add</button>
-						<input type='submit' className='form-input-button'/>
+					<div className='center'>
+						<button onClick={this.addOption.bind(this)} className='button form-input-button'>Add</button>
+						<input type='submit' className='button form-input-button'/>
 					</div>
 				</form>
 			</div>

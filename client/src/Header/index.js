@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Client from '../Client';
 import {Link} from 'react-router';
-import NavLinks from './NavLinks';
 import './index.css';
 
 class Header extends Component {
@@ -26,7 +25,7 @@ class Header extends Component {
     return (
       <div className='row' id='header'>
           <Link to='/'><div className='header-button' id='home-button'>Home</div></Link> 
-          {this.state.user ? <div id='navigation-links'><Link to={'/user/' + this.state.user.username}><div className='header-button'>{this.state.user.username}</div></Link> <Link onClick={this.logout}><div className='header-button'>Logout</div></Link></div> : loggedOut}
+          {this.state.user ? <div id='navigation-links'><Link to={'/user/' + this.state.user.username}><div className='header-button'>{this.state.user.username}</div></Link> <Link to='#' onClick={this.logout}><div className='header-button'>Logout</div></Link></div> : loggedOut}
       </div>
     );
   }

@@ -14,23 +14,3 @@
 	white-space: nowrap;
 	text-align: center;
 }
-
-.small-button{
-	height: 2em;
-	width: 150px;
-	text-align: center;
-	border: 2px solid white;
-	background: none;
-	color: black;
-	margin-top: 20px;
-	margin-right: 5px;
-	margin-left: 5px;
-	line-height: 2em;
-	font-style: normal;
-	border-radius: 40px;
-}
-
-.small-button:hover{
-	background: white;
-	cursor: pointer;
-}

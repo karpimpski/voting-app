@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Client from '../Client';
 import {Link} from 'react-router';
 import Header from '../Header';
-import './index.css';
 
 class Index extends Component {
   constructor(props) {
@@ -34,12 +33,12 @@ class Index extends Component {
         var poll = this.state.polls[key]
         return (
           <div className='center row' key={i}>
-            <Link to={`/poll/${encodeURIComponent(poll.name)}`}><div className='poll-button'>{poll.name}</div></Link>
+            <Link to={`/poll/${encodeURIComponent(poll.name)}`}><div className='tall wide button'>{poll.name}</div></Link>
           </div>
         )
       })}
       <div className='center row'>
-        <Link to={`/newpoll`} onClick={this.checkVote.bind(this)}><div className='form-button'>New Poll</div></Link>
+        <Link to={`/newpoll`} onClick={this.checkVote.bind(this)}><div className='tall wide button'>New Poll</div></Link>
       </div>
       </div>
     );

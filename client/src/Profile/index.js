@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Client from '../Client';
 import {Link} from 'react-router';
 import Header from '../Header';
+import './index.css';
 
 class Profile extends Component {
 	constructor(props){
@@ -18,13 +19,17 @@ class Profile extends Component {
 
   render(){
     return (
-    	<div id='poll'>
+    	<div id='profile'>
     		<Header />
-	    	<h1>{this.state.user.username}</h1>
+    		<div className='center row'>
+	    		<h1>{this.state.user.username}</h1>
+	    	</div>
 	    	{this.state.user.poll_names.map( (poll, i) => {
 	    		return (
-	    			<div>
-	    			<Link to={`/poll/${encodeURIComponent(poll)}`}>{poll}</Link><br/>
+	    			<div className='user-poll'>
+	    				<div className='center row'>
+	    					<Link to={`/poll/${encodeURIComponent(poll)}`}><div className='wide tall button'>{poll}</div></Link><br/>
+	    				</div>
 	    			</div>
 	    		)
 	    	})}

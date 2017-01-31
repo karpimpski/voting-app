@@ -1,0 +1,30 @@
+.login-input{
+	border: none;
+	border-bottom: 2px solid white;
+	background: none;
+	text-align: center;
+	transition: all 0.5s;
+	width: 250px;
+}
+
+.login-input:focus{
+	outline: none;
+	background: rgba(0,0,0,0.1);
+}
+
+#submit-form{
+	border: 2px solid white;
+	background: none;
+	border-radius: 40px;
+	width: 80px;
+	transition: all 0.5s;
+}
+
+#submit-form:hover{
+	background: white;
+	cursor: pointer;
+}
+
+#register_form form div{
+	margin-top: 20px;
+}

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Header from '../Header';
+import './index.css';
 
 class LogIn extends Component {
   render(){
@@ -7,16 +8,14 @@ class LogIn extends Component {
     	<div id='register_form'>
     		<Header />
 	      <form action="/api/login" method="POST">
-	        <div>
-	          <label>Username:</label>
-	          <input type="text" name="username"/>
+	        <div className='center row'>
+	          <input type="text" name="username" id='username' className='login-input' placeholder='Username'/>
 	        </div>
-	        <div>
-	          <label>Password:</label>
-	          <input type="password" name="password"/>
+	        <div className='center row'>
+	          <input type="password" name="password" id='password' className='login-input' placeholder='Password'/>
 	        </div>
-	        <div>
-	          <input type="submit" value="Log In"/>
+	        <div className='center row'>
+	          <input type="submit" value="Log In" id='submit-form'/>
 	        </div>
 	      </form>
       </div>

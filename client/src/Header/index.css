@@ -25,6 +25,6 @@
 	text-align: center;
 }
 
-#home-button:hover, #navigation-links *:hover{
+#home-button:hover, #navigation-links *:hover, .header-button:hover{
 	background: white;
 }
