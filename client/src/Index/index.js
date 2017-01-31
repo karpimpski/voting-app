@@ -54,17 +54,18 @@ class Index extends Component {
 
   render(){
     let polls = this.state.currentPolls;
+    let emptyPoll = <Link to={`/newpoll`}><div className='button index-button'><span>Add a poll!</span></div></Link>
     return (
       <div id='polls'>
         <Header />
           <div id='poll-list'>
             <div className='center row'>
               {this.link(polls[0])}
-              {this.link(polls[1]) ? this.link(polls[1]) : null}
+              {this.link(polls[1]) ? this.link(polls[1]) : emptyPoll}
             </div>
             <div className='center row'>
-              {this.link(polls[2]) ? this.link(polls[2]) : null}
-              {this.link(polls[3]) ? this.link(polls[3]) : null}
+              {this.link(polls[2]) ? this.link(polls[2]) : emptyPoll}
+              {this.link(polls[3]) ? this.link(polls[3]) : emptyPoll}
             </div>
           
           <div className='center row'>

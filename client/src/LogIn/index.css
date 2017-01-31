@@ -10,19 +10,20 @@
 
 .login-input:focus{
 	outline: none;
-	background: rgba(0,0,0,0.1);
+	background: hsl(0,0%,5%);
 }
 
 #submit-form{
 	border: 2px solid white;
 	background: none;
-	border-radius: 40px;
-	width: 80px;
+	width: 120px;
+	height: 40px;
 	transition: all 0.5s;
+	color: white;
 }
 
 #submit-form:hover{
-	background: white;
+	background: hsl(0,0%,10%);
 	cursor: pointer;
 }
 

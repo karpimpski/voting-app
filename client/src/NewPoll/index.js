@@ -27,19 +27,19 @@ class NewPoll extends Component {
 	render() {
 		var inputs = [];
 		for(var i = 0; i < this.state.num; i++){
-			inputs.push(<div key={i} className='center'><input name='option' className='form-input' placeholder='Option' autoComplete='off'/><br/></div>)
+			inputs.push(<div key={i} className='center row'><input name='option' className='form-input' placeholder='Option' autoComplete='off'/><br/></div>)
 		}
 		return (
 			<div>
 				<Header />
 				<form action='api/newpoll' method='POST'>
-					<div className='center'>
-						<input name='name' className='form-input' placeholder='name' autoComplete='off'/>
+					<div className='center row'>
+						<input name='name' className='form-input' placeholder='Name' autoComplete='off'/>
 					</div>
 					{inputs}
-					<div className='center'>
-						<button onClick={this.addOption.bind(this)} className='button form-input-button'>Add</button>
-						<input type='submit' className='button form-input-button'/>
+					<div className='center row'>
+						<button onClick={this.addOption.bind(this)} className='button form-input-button'>Add Option</button>
+						<input type='submit' className='button form-input-button' id='submit-poll' value='Submit Poll'/>
 					</div>
 				</form>
 			</div>

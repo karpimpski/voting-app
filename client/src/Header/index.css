@@ -1,7 +1,7 @@
 #header{
-	background: gray;
-	height: 3em;
-	line-height: 3em;
+	background: hsl(0,0%,5%);
+	height: 4em;
+	line-height: 4em;
 	justify-content: space-between;
 }
 
@@ -10,21 +10,14 @@
 	height: 100%;
 }
 
-#navigation-links:nth-child(2){
-	margin-right: 20px;
-}
-
-#home-button{
-	margin-left: 20px;
-}
-
 .header-button{
 	height: 100%;
-	background: DarkGray;
-	width: 4em;
+	width: 120px;
 	text-align: center;
+	font-style: normal;
+	transition: all 0.3s;
 }
 
 #home-button:hover, #navigation-links *:hover, .header-button:hover{
-	background: white;
+	background: hsl(0,0%,10%);
 }
