@@ -5,6 +5,8 @@ import Header from '../Header';
 import { TwitterButton, TwitterCount } from "react-social";
 import {Chart} from 'react-google-charts';
 
+import './index.css';
+
 class Poll extends Component {
 	constructor(props){
 		super(props);
@@ -61,40 +63,54 @@ class Poll extends Component {
   	let url='http://localhost:3000';
   	let text = `${this.state.poll.name} | Vote now at ${window.location.protocol}//${window.location.host}${window.location.pathname}`
   	const button = 
-  	<TwitterButton url={text}>
-      <TwitterCount url={url} />
-      {" Share " + url}
-    </TwitterButton>
+  	<a href={"https://twitter.com/intent/tweet?text=" + encodeURIComponent(text)}>
+			<div className='small-button'>Share</div>
+		</a>
     let data = [
     	['Option', 'Votes']
     ]
-    this.state.poll.options.forEach((option) => data.push([option.name, option.votes]))
-    console.log(data);
+    this.state.poll.options.forEach((option) => data.push([option.name, option.votes]));
+
+    let options = {
+    	backgroundColor: {fill: 'transparent'}
+    }
     return (
 
     	
     	<div id='poll'>
     		<Header />
-	    	<h1>{this.state.poll.name}</h1>
-	    	<h2><Link to={`/user/${this.state.poll.author}`}>{this.state.poll.author}</Link></h2>
-	    	{this.state.poll.options.map( (option, i) => {
-	    		return (
-	    			<p id={`vote_${i}`}key={i}><span className='name' onClick={this.vote.bind(this)}>{option.name}</span> - {option.votes}</p>
-	    		)
-	    	})}
-	    	<Chart
-	        chartType="PieChart" 
-	        data={data}
-	        options={{}}
-	        graph_id="chart"
-	        width="100%"
-	        height="400px"
-	        legend_toggle
-	       />
-	    	<Link to='/'>Home</Link>
-	    	{creator ? <Link onClick={this.delete.bind(this)}>Delete</Link> : null }
-	    	{loggedIn ? button : null }
-	    	{loggedIn ? <Link onClick={this.add.bind(this)}>Add Option</Link> : null}
+    		<div className='container'>
+	    		<div className='row'>
+	    		<div id='poll-text'>
+			    	<h1 className='name'>{this.state.poll.name}</h1>
+			    	<h2 className='center'><Link to={`/user/${this.state.poll.author}`}>{this.state.poll.author}</Link></h2>
+			    	{this.state.poll.options.map( (option, i) => {
+			    		return (
+			    			<div id={`vote_${i}`}key={i} className='poll-button center' onClick={this.vote.bind(this)}>{option.name}</div>
+			    		)
+			    	})}
+			    	<div className='center'>
+			    		{loggedIn ? button : null }
+			    		{loggedIn ? <Link onClick={this.add.bind(this)}><div className='small-button'>	Add Option</div></Link> : null}
+			    	</div>
+			    	<div className='center'>
+			    		{creator ? <Link onClick={this.delete.bind(this)}><div className='small-button'>Delete</div></Link> : null }
+			    	</div>
+			    	
+			    	
+		    	</div>
+		    	<div id='poll-chart' className='row end'>
+			    	<Chart
+			        chartType="PieChart" 
+			        data={data}
+			        options={options}
+			        graph_id="chart"
+			        legend_toggle
+			       />
+		       </div>
+		      </div>
+	      </div>
+	    	
     	</div>
     );
   }

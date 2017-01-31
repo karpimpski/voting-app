@@ -26,7 +26,7 @@ class NewPoll extends Component {
 	render() {
 		var inputs = [];
 		for(var i = 0; i < this.state.num; i++){
-			inputs.push(<div key={i}><input name='option'/><br/></div>)
+			inputs.push(<div key={i}><input name='option' className='form-input'/><br/></div>)
 		}
 		return (
 			<div>
