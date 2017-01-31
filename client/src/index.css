@@ -1,0 +1,15 @@
+body{
+	margin: 0;
+	background: LightSkyBlue;
+}
+
+a{
+	text-decoration: none;
+	color: blue;
+	font-style: italic;
+}
+
+.row{
+	display: flex;
+	width: 100%;
+}

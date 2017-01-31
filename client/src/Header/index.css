@@ -1,0 +1,24 @@
+#header{
+	background: gray;
+	height: 3em;
+	line-height: 3em;
+	justify-content: space-between;
+	padding-left: 20px;
+}
+
+#navigation-links{
+	display: flex;
+	margin-right: 40px;
+	height: 100%;
+}
+
+.header-button{
+	height: 100%;
+	background: DarkGray;
+	width: 4em;
+	text-align: center;
+}
+
+#home-button:hover, #navigation-links *:hover{
+	background: white;
+}

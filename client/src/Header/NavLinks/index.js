@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import Client from '../Client';
+import Client from '../../Client';
 import {Link} from 'react-router';
-import NavLinks from './NavLinks';
-import './index.css';
 
-class Header extends Component {
+class NavLinks extends Component {
   constructor(props) {
     super(props);
     this.state = {user: null};
@@ -32,4 +30,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default NavLinks;
