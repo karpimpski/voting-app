@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Client from '../Client';
 import {Link} from 'react-router';
 import Header from '../Header';
+import './index.css';
 
 class Index extends Component {
   constructor(props) {
@@ -44,19 +45,28 @@ class Index extends Component {
     }
   }
 
+  link(p){
+    if(p){
+      return <Link to={`/poll/${encodeURIComponent(p.name)}`}><div className='button index-button'><span>{p.name}</span></div></Link>
+    }
+    
+  }
+
   render(){
+    let polls = this.state.currentPolls;
     return (
       <div id='polls'>
         <Header />
           <div id='poll-list'>
-          {Object.keys(this.state.currentPolls).map((key, i) => {
-            var poll = this.state.currentPolls[key]
-            return (
-              <div className='center row' key={i}>
-                <Link to={`/poll/${encodeURIComponent(poll.name)}`}><div className='tall wide button'>{poll.name}</div></Link>
-              </div>
-            )
-          })}
+            <div className='center row'>
+              {this.link(polls[0])}
+              {this.link(polls[1]) ? this.link(polls[1]) : null}
+            </div>
+            <div className='center row'>
+              {this.link(polls[2]) ? this.link(polls[2]) : null}
+              {this.link(polls[3]) ? this.link(polls[3]) : null}
+            </div>
+          
           <div className='center row'>
             {this.state.pollIndex > 0 ? <div className='tall thin button' onClick={this.previousPage.bind(this)}>Previous</div> : null}
             <Link to={`/newpoll`} onClick={this.checkVote.bind(this)}><div className='tall thin button'>New Poll</div></Link>

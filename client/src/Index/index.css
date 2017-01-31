@@ -1,1 +1,15 @@
-#poll_list
+#poll-list{
+	margin-top: 45px;
+}
+.index-button{
+	width: 200px;
+	height: 200px;
+	line-height: 200px;
+	margin-bottom: -2px;
+}
+
+.index-button span {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;
+}

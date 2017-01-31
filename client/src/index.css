@@ -1,11 +1,12 @@
 body{
 	margin: 0;
-	background: LightSkyBlue;
+	background: black;
+	color: white;
 }
 
 a{
 	text-decoration: none;
-	color: blue;
+	color: white;
 	font-style: italic;
 }
 
@@ -23,11 +24,9 @@ a{
 
 .button{
 	border: 2px solid white;
-	border-radius: 40px;
 	background: none;
 	transition: all 0.5s;
-	color: black;
-	margin-top: 20px;
+	color: white;
 	text-align: center;
 }
 
@@ -54,6 +53,6 @@ a{
 }
 
 .button:hover{
-	background: white;
+	background: hsl(1, 0%, 20%);
 	cursor: pointer;
 }
