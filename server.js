@@ -126,10 +126,10 @@ app.patch('/api/addvote/', (req, res) => {
 	var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 	Poll.findOne({name: req.body.name}, function(err, poll){
 		if(err) throw err;
-		if(poll.voters.indexOf(ip) < 0 && req.user && poll.voters_names.indexOf(req.user.username) < 0){
+		if(poll.voters.indexOf(ip) < 0 && (!req.user || req.user && poll.voters_names.indexOf(req.user.username) < 0)){
 			poll.options.find((opt) => opt.name == req.body.option).votes++;
 			poll.voters = poll.voters.concat(ip);
-			if(req.user.username) poll.voters_names = poll.voters_names.concat(req.user.username);
+			if(req.user) poll.voters_names = poll.voters_names.concat(req.user.username);
 			poll.markModified('options', 'voters', 'voters_names');
 			poll.save(function(err, poll){
 				res.end(JSON.stringify(poll));
