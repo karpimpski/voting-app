@@ -13,7 +13,6 @@ class Index extends Component {
   componentDidMount(){
     Client.get('/api/polls', (res) => {
       this.setState({polls: res, currentPolls: res.slice(this.state.pollIndex, this.state.pollIndex + 4)});
-      console.log(this.state.currentPolls);
     });
     Client.get('/api/currentuser', (res) => {
       this.setState({user: res.res})
@@ -54,7 +53,8 @@ class Index extends Component {
 
   render(){
     let polls = this.state.currentPolls;
-    let emptyPoll = <Link to={`/newpoll`}><div className='button index-button'><span>Add a poll!</span></div></Link>
+    let newLink = this.state.user ? '/newpoll' : '/login';
+    let emptyPoll = <Link to={newLink}><div className='button index-button'><span>Add a poll!</span></div></Link>
     let nextClass = this.state.pollIndex < this.state.polls.length - 4 ? 'active' : '';
     let previousClass = this.state.pollIndex > 0 ? 'active' : '';
     return (
@@ -75,7 +75,7 @@ class Index extends Component {
             </div>
           
           <div className='center row'>
-            {this.state.user ? <Link to={`/newpoll`} onClick={this.checkVote.bind(this)}><div className='tall thin button'>New Poll</div></Link> : null}
+            {this.state.user ? <Link to={`/newpoll`} onClick={this.checkVote.bind(this)}><div className='tall thin button' id='new-poll'>New Poll</div></Link> : null}
           </div>
         </div>
       </div>

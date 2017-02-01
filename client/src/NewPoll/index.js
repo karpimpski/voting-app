@@ -18,10 +18,17 @@ class NewPoll extends Component {
 	componentDidMount(){
     Client.get('/api/currentuser', (res) => {
     	if(res.res == null){
-    		alert('You need to be signed in!');
     		window.location = '/';
     	}
     });
+  }
+
+  keyPress(e){
+  	var key = e.which || e.keyCode;
+    if (key === 13) {
+    	e.preventDefault();
+    	e.target.parentElement.parentElement.submit();
+    }
   }
 	
 	render() {
@@ -32,7 +39,7 @@ class NewPoll extends Component {
 		return (
 			<div>
 				<Header />
-				<form action='api/newpoll' method='POST'>
+				<form action='api/newpoll' method='POST' onKeyPress={this.keyPress.bind(this)} >
 					<div className='center row'>
 						<input name='name' className='form-input' placeholder='Name' autoComplete='off'/>
 					</div>
