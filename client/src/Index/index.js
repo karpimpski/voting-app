@@ -55,23 +55,27 @@ class Index extends Component {
   render(){
     let polls = this.state.currentPolls;
     let emptyPoll = <Link to={`/newpoll`}><div className='button index-button'><span>Add a poll!</span></div></Link>
+    let nextClass = this.state.pollIndex < this.state.polls.length - 4 ? 'active' : '';
+    let previousClass = this.state.pollIndex > 0 ? 'active' : '';
     return (
       <div id='polls'>
         <Header />
           <div id='poll-list'>
-            <div className='center row'>
-              {this.link(polls[0])}
-              {this.link(polls[1]) ? this.link(polls[1]) : emptyPoll}
-            </div>
-            <div className='center row'>
-              {this.link(polls[2]) ? this.link(polls[2]) : emptyPoll}
-              {this.link(polls[3]) ? this.link(polls[3]) : emptyPoll}
+            <div id='poll-boxes'>
+              <div className={'navigation ' + previousClass} onClick={this.previousPage.bind(this)}>{'<'}</div>
+              <div className='center row'>
+                {this.link(polls[0])}
+                {this.link(polls[1]) ? this.link(polls[1]) : emptyPoll}
+              </div>
+              <div className='center row'>
+                {this.link(polls[2]) ? this.link(polls[2]) : emptyPoll}
+                {this.link(polls[3]) ? this.link(polls[3]) : emptyPoll}
+              </div>
+              <div className={'right navigation ' + nextClass} onClick={this.nextPage.bind(this)}>{'>'}</div>
             </div>
           
           <div className='center row'>
-            {this.state.pollIndex > 0 ? <div className='tall thin button' onClick={this.previousPage.bind(this)}>Previous</div> : null}
-            <Link to={`/newpoll`} onClick={this.checkVote.bind(this)}><div className='tall thin button'>New Poll</div></Link>
-            {this.state.pollIndex < this.state.polls.length - 4 ? <div className='tall thin button' onClick={this.nextPage.bind(this)}>Next</div> : null}
+            {this.state.user ? <Link to={`/newpoll`} onClick={this.checkVote.bind(this)}><div className='tall thin button'>New Poll</div></Link> : null}
           </div>
         </div>
       </div>

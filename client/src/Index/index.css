@@ -1,5 +1,8 @@
 #poll-list{
 	margin-top: 45px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
 }
 .index-button{
 	width: 200px;
@@ -12,4 +15,36 @@
   display: inline-block;
   vertical-align: middle;
   line-height: normal;
+}
+
+.navigation{
+	width: 44px;
+	height: 400px;
+	line-height: 400px;
+	position: absolute;
+	height: 400px;
+	text-align: center;
+	font-weight: bold;
+	transition: all 0.3s;
+}
+
+.navigation:hover{
+	cursor: default;
+}
+
+.navigation.active:hover{
+	background: hsl(1, 0%, 20%);
+	cursor: pointer;
+}
+
+#poll-boxes{
+	border: 2px solid white;
+	display: flex;
+	flex-wrap: wrap;
+	width: 500px;
+	position: relative;
+}
+
+.right{
+	right: 0;
 }
