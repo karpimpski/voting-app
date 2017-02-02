@@ -12,6 +12,8 @@ var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
+var MemoryStore = require('session-memory-store')(session);
+
 passport.serializeUser(function(user, done) {
   done(null, user.id);
 });
@@ -43,7 +45,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({
     secret: 'aglhsha;asgq351021hgadlbvagq723ntaskg1',
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    store: new MemoryStore()
 }));
 app.use(passport.initialize());
 app.use(passport.session());
