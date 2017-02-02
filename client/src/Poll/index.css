@@ -24,3 +24,15 @@
 	margin-right: 5px;
 	margin-bottom: 10px;
 }
+
+#poll-text{
+	width: 50%;
+}
+
+#poll-chart{
+	width: 50%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	padding-top: 50px;
+}

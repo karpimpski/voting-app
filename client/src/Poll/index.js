@@ -71,7 +71,8 @@ class Poll extends Component {
 
     let options = {
     	backgroundColor: {fill: 'transparent'},
-    	legendTextStyle: {color: '#FFF'}
+    	legendTextStyle: {color: '#FFF'},
+    	'chartArea': {'width': '100%', 'height': '100%'}
     }
     return (
 
