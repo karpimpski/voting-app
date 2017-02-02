@@ -13,7 +13,6 @@ class Profile extends Component {
 	componentDidMount(){
 		Client.get(`/api/user/` + this.props.params.username, (res) => {
 			this.setState({user: res.res});
-			console.log(this.state.user);
 		});
 	}
 
@@ -26,7 +25,7 @@ class Profile extends Component {
 	    	</div>
 	    	{this.state.user.poll_names.map( (poll, i) => {
 	    		return (
-	    			<div className='user-poll'>
+	    			<div className='user-poll' key={i}>
 	    				<div className='center row'>
 	    					<Link to={`/poll/${encodeURIComponent(poll)}`}><div className='wide tall button'>{poll}</div></Link><br/>
 	    				</div>

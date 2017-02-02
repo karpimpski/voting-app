@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Client from '../Client';
 import {Link} from 'react-router';
 import Header from '../Header';
-import { TwitterButton, TwitterCount } from "react-social";
 import {Chart} from 'react-google-charts';
 
 import './index.css';
@@ -60,7 +59,6 @@ class Poll extends Component {
   render(){
   	const creator = this.state.user && this.state.user.username === this.state.poll.author;
   	const loggedIn = this.state.user !== null;
-  	let url='http://localhost:3000';
   	let text = `${this.state.poll.name} | Vote now at ${window.location.protocol}//${window.location.host}${window.location.pathname}`
   	const button = 
   	<a href={"https://twitter.com/intent/tweet?text=" + encodeURIComponent(text)}>
@@ -72,7 +70,8 @@ class Poll extends Component {
     this.state.poll.options.forEach((option) => data.push([option.name, option.votes]));
 
     let options = {
-    	backgroundColor: {fill: 'transparent'}
+    	backgroundColor: {fill: 'transparent'},
+    	legendTextStyle: {color: '#FFF'}
     }
     return (
 
@@ -86,7 +85,7 @@ class Poll extends Component {
 			    	<h2 className='center row'><Link to={`/user/${this.state.poll.author}`}>{this.state.poll.author}</Link></h2>
 			    	{this.state.poll.options.map( (option, i) => {
 			    		return (
-			    			<div className='center row'><div id={`vote_${i}`}key={i} className='tall wide button' onClick={this.vote.bind(this)}>{option.name}</div></div>
+			    			<div className='center row' key={i} ><div id={`vote_${i}`}className='tall wide button' onClick={this.vote.bind(this)}>{option.name}</div></div>
 			    		)
 			    	})}
 			    	<div className='center row'>

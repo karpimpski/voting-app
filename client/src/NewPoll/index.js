@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import Client from '../Client';
-import {Link} from 'react-router';
 import Header from '../Header';
 import './index.css';
 
