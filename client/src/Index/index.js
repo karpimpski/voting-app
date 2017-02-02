@@ -64,7 +64,7 @@ class Index extends Component {
             <div id='poll-boxes'>
               <div className={'navigation ' + previousClass} onClick={this.previousPage.bind(this)}>{'<'}</div>
               <div className='center row'>
-                {this.link(polls[0])}
+                {this.link(polls[0]) ? this.link(polls[0]) : emptyPoll}
                 {this.link(polls[1]) ? this.link(polls[1]) : emptyPoll}
               </div>
               <div className='center row'>

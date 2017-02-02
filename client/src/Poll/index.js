@@ -62,7 +62,7 @@ class Poll extends Component {
   	let text = `${this.state.poll.name} | Vote now at ${window.location.protocol}//${window.location.host}${window.location.pathname}`
   	const button = 
   	<a href={"https://twitter.com/intent/tweet?text=" + encodeURIComponent(text)}>
-			<div className='short thin button normal-text'>Share</div>
+			<div className='short thin button normal-text poll-bottom'>Share</div>
 		</a>
     let data = [
     	['Option', 'Votes']
@@ -85,15 +85,15 @@ class Poll extends Component {
 			    	<h2 className='center row'><Link to={`/user/${this.state.poll.author}`}>{this.state.poll.author}</Link></h2>
 			    	{this.state.poll.options.map( (option, i) => {
 			    		return (
-			    			<div className='center row' key={i} ><div id={`vote_${i}`}className='tall wide button' onClick={this.vote.bind(this)}>{option.name}</div></div>
+			    			<div className='center row' key={i} ><div id={`vote_${i}`}className='tall wide button poll-option' onClick={this.vote.bind(this)}>{option.name}</div></div>
 			    		)
 			    	})}
 			    	<div className='center row'>
 			    		{loggedIn ? button : null }
-			    		{loggedIn ? <Link onClick={this.add.bind(this)}><div className='short thin button normal-text'>	Add Option</div></Link> : null}
+			    		{loggedIn ? <Link onClick={this.add.bind(this)}><div className='short thin button normal-text poll-bottom'>	Add Option</div></Link> : null}
 			    	</div>
 			    	<div className='center row'>
-			    		{creator ? <Link onClick={this.delete.bind(this)}><div className='short thin button normal-text'>Delete</div></Link> : null }
+			    		{creator ? <Link onClick={this.delete.bind(this)}><div className='short thin button normal-text poll-bottom'>Delete</div></Link> : null }
 			    	</div>
 			    	
 			    	

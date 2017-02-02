@@ -27,7 +27,7 @@ class Profile extends Component {
 	    		return (
 	    			<div className='user-poll' key={i}>
 	    				<div className='center row'>
-	    					<Link to={`/poll/${encodeURIComponent(poll)}`}><div className='wide tall button'>{poll}</div></Link><br/>
+	    					<Link to={`/poll/${encodeURIComponent(poll)}`}><div className='wide tall button user-poll-button'>{poll}</div></Link><br/>
 	    				</div>
 	    			</div>
 	    		)

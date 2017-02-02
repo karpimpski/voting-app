@@ -14,3 +14,13 @@
 	white-space: nowrap;
 	text-align: center;
 }
+
+.poll-option{
+	margin-bottom: 10px;
+}
+
+.poll-bottom{
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-bottom: 10px;
+}
