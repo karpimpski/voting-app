@@ -34,7 +34,7 @@ class Register extends Component {
           <input type="password" name="password" className='login-input' placeholder='Password' value={this.state.passwordOne} onChange={this.changeOne.bind(this)}/>
         </div>
         <div className='center row'>
-          <input type="password" name="password" className='login-input' placeholder='Password again' value={this.state.passwordTwo} onChange={this.changeTwo.bind(this)}/>
+          <input type="password" className='login-input' placeholder='Password again' value={this.state.passwordTwo} onChange={this.changeTwo.bind(this)}/>
         </div>
         <div className='center row'>
           <input type="submit" value="Register" id='submit-form' onClick={this.submit.bind(this)}/>
